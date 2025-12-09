@@ -760,25 +760,100 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
 
-    // Display Gender
-    const genderResults = document.getElementById("genderResults");
-    if (genderResults) {
-      genderResults.innerHTML = `
-      Male: ${genderCount.male} <br>
-        Female: ${genderCount.female} <br>
-          Other: ${genderCount.other}
-          `;
+    // --- Render Gender Chart ---
+    const genderCtx = document.getElementById('genderChart');
+    if (genderCtx) {
+      new Chart(genderCtx, {
+        type: 'bar',
+        data: {
+          labels: ['Male', 'Female', 'Other'],
+          datasets: [{
+            label: 'Number of Users',
+            data: [genderCount.male, genderCount.female, genderCount.other],
+            backgroundColor: [
+              'rgba(54, 162, 235, 0.6)', // Blue for Male
+              'rgba(255, 99, 132, 0.6)', // Pink for Female
+              'rgba(75, 192, 192, 0.6)'  // Teal for Other
+            ],
+            borderColor: [
+              'rgba(54, 162, 235, 1)',
+              'rgba(255, 99, 132, 1)',
+              'rgba(75, 192, 192, 1)'
+            ],
+            borderWidth: 1
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false } // Hide legend for single dataset if desired, or keep it.
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              ticks: { stepSize: 1 }
+            }
+          }
+        }
+      });
     }
 
-    // Display Age Groups
-    const ageResults = document.getElementById("ageResults");
-    if (ageResults) {
-      ageResults.innerHTML = `
-        18-25: ${ageGroups["18-25"]} <br>
-        26-35: ${ageGroups["26-35"]} <br>
-        36-50: ${ageGroups["36-50"]} <br>
-        50+: ${ageGroups["50+"]}
-      `;
+    // --- Render Age Chart ---
+    const ageCtx = document.getElementById('ageChart');
+    if (ageCtx) {
+      new Chart(ageCtx, {
+        type: 'bar',
+        data: {
+          labels: ['18-25', '26-35', '36-50', '50+'],
+          datasets: [{
+            label: 'Age Distribution',
+            data: [ageGroups["18-25"], ageGroups["26-35"], ageGroups["36-50"], ageGroups["50+"]],
+            backgroundColor: 'rgba(107, 142, 35, 0.6)', // Site Main Green
+            borderColor: 'rgba(107, 142, 35, 1)',
+            borderWidth: 1
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false }
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              ticks: { stepSize: 1 }
+            }
+          }
+        }
+      });
+    }
+
+    // --- Generate Summary ---
+    const summaryDiv = document.getElementById("dashboardSummaryText");
+    if (summaryDiv) {
+      const totalUsers = users.length;
+
+      // Find most common gender
+      let maxGender = "male";
+      if (genderCount.female > genderCount[maxGender]) maxGender = "female";
+      if (genderCount.other > genderCount[maxGender]) maxGender = "other";
+
+      // Find most common age group
+      let maxAgeGroup = "18-25";
+      if (ageGroups["26-35"] > ageGroups[maxAgeGroup]) maxAgeGroup = "26-35";
+      if (ageGroups["36-50"] > ageGroups[maxAgeGroup]) maxAgeGroup = "36-50";
+      if (ageGroups["50+"] > ageGroups[maxAgeGroup]) maxAgeGroup = "50+";
+
+      summaryDiv.innerHTML = `
+            <p><strong>Total Registered Users:</strong> ${totalUsers}</p>
+            <p><strong>Demographics Overview:</strong></p>
+            <ul style="margin-left: 20px;">
+                <li>The user base is primarily <strong>${maxGender}</strong> (<span style="color:var(--main-color)">${genderCount[maxGender]}</span> users).</li>
+                <li>The most active age demographic is <strong>${maxAgeGroup}</strong> years old, accounting for <span style="color:var(--main-color)"><strong>${ageGroups[maxAgeGroup]}</strong></span> users.</li>
+            </ul>
+        `;
     }
   }
 });

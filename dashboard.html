@@ -5,9 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Frequency Dashboard</title>
-
-
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body class="dashboard-body">
@@ -17,12 +16,21 @@
 
         <section class="dashboard-card">
             <h2 class="dashboard-card-title">Gender Frequency</h2>
-            <div id="genderResults" class="results-box"></div>
+            <div class="chart-container" style="position: relative; height:300px; width:100%">
+                <canvas id="genderChart"></canvas>
+            </div>
         </section>
 
         <section class="dashboard-card">
             <h2 class="dashboard-card-title">Age Group Frequency</h2>
-            <div id="ageResults" class="results-box"></div>
+            <div class="chart-container" style="position: relative; height:300px; width:100%">
+                <canvas id="ageChart"></canvas>
+            </div>
+        </section>
+
+        <section class="dashboard-card">
+            <h2 class="dashboard-card-title">Summary</h2>
+            <div id="dashboardSummaryText" style="font-size: 18px; line-height: 1.6;"></div>
         </section>
 
         <!-- Back to Account Button -->

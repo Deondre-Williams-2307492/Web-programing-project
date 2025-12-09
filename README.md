@@ -21,6 +21,7 @@ This project was built using standard web technologies without external framewor
     *   DOM Manipulation.
     *   Event Handling.
     *   `localStorage` for persisting user data, cart items, and orders.
+*   **Chart.js:** library used for visualizing user demographics (bar charts) on the Dashboard.
 *   **Google Fonts:** Specifically the 'Material Icons' library for UI icons.
 
 ## 🚀 How to Run the Project
@@ -28,6 +29,7 @@ This project was built using standard web technologies without external framewor
 2.  Navigate to the project directory.
 3.  **Open** the `index.html` file in any modern web browser (Chrome, Firefox, Edge, etc.).
     *   Alternatively, you can open `logIn.html` directly if you already have an account, but the flow typically starts at the registration page (`index.html`) or login page.
+4. **Internet Connection:** Required for loading the Chart.js CDN and Google Fonts.
 
 ## 🔐 Login Credentials
 Since this application uses your browser's **Local Storage** to save data, there are no pre-existing accounts when you first run it.
@@ -48,9 +50,9 @@ Since this application uses your browser's **Local Storage** to save data, there
 *   **Shopping Cart:** Add, remove, and manage items; automatic tax and discount calculations.
 *   **Checkout:** Simulate a checkout process with shipping and payment validation.
 *   **Order History:** Users can view their past orders.
-*   **Dashboard:** View platform statistics (Gender and Age demographics of registered users).
-*   **Invoice Search:** Ability to search for invoices by TRN.
-*   **Responsive Design:** Optimized for Mobile, Tablet, and Desktop views.
+*   **Enhanced Dashboard:** visualize user demographics with interactive **Charts** (Gender & Age) and read automated data summaries.
+*   **Invoice Search:** Ability to search for invoices by TRN with instant feedback.
+*   **Responsive Design:** Fully optimized for Mobile, Tablet, and Desktop views, featuring a **collapsible sidebar** menu for smaller screens.
 
 ## 🗺️ Site Map
 ```mermaid
