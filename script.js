@@ -526,6 +526,11 @@ document.addEventListener("DOMContentLoaded", () => {
       orders.push(order);
       localStorage.setItem("orders", JSON.stringify(orders));
 
+      // NEW: Save to AllInvoices as per requirement
+      const allInvoices = JSON.parse(localStorage.getItem("AllInvoices")) || [];
+      allInvoices.push(order);
+      localStorage.setItem("AllInvoices", JSON.stringify(allInvoices));
+
       alert(`✅ Order Confirmed!
 Thank you, ${name}!
 Total: $${total.toFixed(2)}
@@ -687,6 +692,11 @@ document.addEventListener("DOMContentLoaded", () => {
       // Save back to localStorage
       localStorage.setItem("orders", JSON.stringify(orders));
 
+      // NEW: Save to AllInvoices
+      const allInvoices = JSON.parse(localStorage.getItem("AllInvoices")) || [];
+      allInvoices.push(order);
+      localStorage.setItem("AllInvoices", JSON.stringify(allInvoices));
+
       // Clear the cart after confirming
       localStorage.removeItem("cart");
 
@@ -706,7 +716,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const ageGroups = { "18-25": 0, "26-35": 0, "36-50": 0, "50+": 0 };
 
     users.forEach(user => {
-      
+
       // If user.gender is undefined, default to "other"
       const gender = user.gender ? user.gender.toLowerCase() : "other";
 
@@ -751,6 +761,52 @@ document.addEventListener("DOMContentLoaded", () => {
         50+: ${ageGroups["50+"]}
       `;
     }
+  }
+});
+
+// ---------------- Invoice Search ----------------
+function ShowInvoices(searchTRN = null) {
+  // Requirement: Use AllInvoices from localStorage
+  // If AllInvoices is empty (e.g. old data), fallback to 'orders'
+  let invoices = JSON.parse(localStorage.getItem("AllInvoices")) || [];
+
+  if (invoices.length === 0) {
+    invoices = JSON.parse(localStorage.getItem("orders")) || [];
+  }
+
+  console.log("--- Showing Invoices ---");
+
+  if (searchTRN) {
+    // Filter by TRN (username)
+    const results = invoices.filter(inv => inv.user === searchTRN);
+    console.log(`Found ${results.length} invoices for TRN: ${searchTRN}`);
+    console.log(results);
+    if (results.length === 0) {
+      alert("No invoices found for this TRN.");
+    }
+  } else {
+    // Display all
+    console.log("All Invoices:", invoices);
+  }
+}
+
+// Event Listener for the Search Bar in Sidebar
+document.addEventListener("DOMContentLoaded", () => {
+  const invoiceSearchBtn = document.getElementById("invoiceSearchBtn");
+
+  if (invoiceSearchBtn) {
+    invoiceSearchBtn.addEventListener("click", () => {
+      const trnInput = document.getElementById("invoiceSearchTRN");
+      const trn = trnInput.value.trim();
+
+      if (trn) {
+        // Call the function as requested
+        ShowInvoices(trn);
+      } else {
+        alert("Please enter a TRN to search.");
+        // Optionally show all if empty: ShowInvoices();
+      }
+    });
   }
 });
 

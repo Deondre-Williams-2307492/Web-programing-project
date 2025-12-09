@@ -7,6 +7,7 @@ Day and Time: Thursday 1pm - 3pm-->
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -36,7 +37,14 @@ Day and Time: Thursday 1pm - 3pm-->
       <h2>My Account</h2>
       <a href="profile.html"><span class="material-icons">person</span> Profile</a>
       <a href="orders.html"><span class="material-icons">receipt_long</span> Orders</a>
-      <a id="logoutBtn" href="#"> <span class="material-icons">logout</span> Logout</a>  <!-- # allows you to stay on the same page-->
+      <a id="logoutBtn" href="#"> <span class="material-icons">logout</span> Logout</a>
+      <!-- # allows you to stay on the same page-->
+
+      <div class="search-invoice" style="margin-top: 15px;">
+        <input type="text" id="invoiceSearchTRN" placeholder="Search Invoice (TRN)"
+          style="width: 90%; margin-bottom: 5px;">
+        <button id="invoiceSearchBtn" style="width: 100%;">Search</button>
+      </div>
 
       <h2>Shop By Category</h2>
       <a href="#Clothes"><span class="material-icons">checkroom</span> Clothes</a>

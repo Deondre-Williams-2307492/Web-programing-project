@@ -1401,3 +1401,44 @@ textarea {
   line-height: 1.8;
   padding-left: 10px;
 }
+
+/* --- Invoice Search in Sidebar --- */
+.search-invoice {
+  margin-top: 20px !important; /* Override inline style if needed */
+  padding-top: 15px;
+  border-top: 1px solid rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+}
+
+.search-invoice input {
+  width: 90% !important; 
+  padding: 10px;
+  border: 2px solid #333;
+  border-radius: 6px;
+  font-size: 14px;
+  background-color: var(--form-color);
+  box-sizing: border-box;
+  margin-bottom: 0 !important; 
+}
+
+.search-invoice button {
+  width: 90% !important;
+  padding: 10px;
+  background-color: black;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.search-invoice button:hover {
+  background-color: var(--accent-color);
+  color: black;
+  transform: scale(1.02);
+}
