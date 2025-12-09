@@ -7,7 +7,7 @@ Welcome to the **Stitch & Thread Co.** web application! This project is a functi
 * **Deondre Williams** 2307492
 * **Joshua Ivey** 2305263
 * **Roneil Webster** 2306227
-* **Leary White**2403275
+* **Leary White** 2403275
 
 ## ⭐ Course Information
 *   **Module:** Web Programming (CIT2011)
