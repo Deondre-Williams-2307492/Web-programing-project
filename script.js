@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (!adminExists) {
     const adminUser = {
-      firstName: "System",
+      firstName: "Admin",
       lastName: "Admin",
       dob: "2000-01-01",
       gender: "other",
