@@ -9,6 +9,7 @@ Welcome to the **Stitch & Thread Co.** web application! This project is a functi
 * **Roneil Webster** 2306227
 * **Leary White**2403275
 
+##  Course Information
 *   **Module:** Web Programming (CIT2011)
 *   **Lecturer:** Ms. Christine Anuli
 *   **Occurrence:** UM2 (Thursday 1pm - 3pm)
