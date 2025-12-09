@@ -601,13 +601,32 @@ document.addEventListener("DOMContentLoaded", () => {
       `).join("");
 
       div.innerHTML = `
-        <h3>Order #${order.id}</h3>
-        <p><strong>Date:</strong> ${order.date}</p>
-        <p><strong>Payment:</strong> ${order.paymentMethod}</p>
-        <ul>${itemsHTML}</ul>
-        <p><strong>Total:</strong> $${order.total.toFixed(2)}</p>
+        <div class="invoice-header">
+           <h3>🧾 INVOICE #${order.id}</h3>
+           <p><strong>Stitch & Thread Co.</strong></p>
+           <p>Date: ${order.date}</p>
+        </div>
+        <hr>
+        <div class="invoice-details">
+            <p><strong>Customer:</strong> ${order.customerName || "N/A"}</p>
+            <p><strong>TRN:</strong> ${order.user || "N/A"}</p>
+            <p><strong>Shipping Address:</strong> <br> ${order.address || "N/A"}</p>
+             <p><strong>Phone:</strong> ${order.phone || "N/A"}</p>
+             <p><strong>Payment Method:</strong> ${order.paymentMethod || "N/A"}</p>
+        </div>
+        <hr>
+        <h4>Purchased Items:</h4>
+        <ul class="invoice-items">${itemsHTML}</ul>
+        <hr>
+        <div class="invoice-summary">
+            <p>Subtotal: $${(order.subtotal || 0).toFixed(2)}</p>
+            <p>Discount: -$${(order.discount || 0).toFixed(2)}</p>
+            <p>Tax (15%): $${(order.tax || 0).toFixed(2)}</p>
+            <p class="invoice-total"><strong>Total Cost: $${(order.total || 0).toFixed(2)}</strong></p>
+        </div>
         <button class="cancelOrderBtn" data-id="${order.id}">❌ Cancel Order</button>
       `;
+
 
       orderList.appendChild(div);
     });
@@ -656,7 +675,7 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    document.getElementById("userName").textContent = `${loggedInUser.firstName} ${loggedInUser.lastName}`;
+    document.getElementById("userName").textContent = `${loggedInUser.firstName} ${loggedInUser.lastName} `;
     document.getElementById("userDOB").textContent = loggedInUser.dob;
     document.getElementById("userEmail").textContent = loggedInUser.email;
     document.getElementById("userUsername").textContent = loggedInUser.username;
@@ -745,10 +764,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const genderResults = document.getElementById("genderResults");
     if (genderResults) {
       genderResults.innerHTML = `
-        Male: ${genderCount.male} <br>
+      Male: ${genderCount.male} <br>
         Female: ${genderCount.female} <br>
-        Other: ${genderCount.other}
-      `;
+          Other: ${genderCount.other}
+          `;
     }
 
     // Display Age Groups
