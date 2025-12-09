@@ -74,7 +74,7 @@ graph TD
     A[index.html Register] --> B[logIn.html Login]
     B --> C[aboutUs.html Home]
     B --> L[resetPassword.html]
-    B -.-> M[accountLocked.html (Logic)]
+    B -.-> M["accountLocked.html (Logic)"]
     
     subgraph Main Navigation
     C --> D[products.html]
