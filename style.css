@@ -1,10 +1,15 @@
 /*
-Name: Serena Edwards
-ID: 2306227
+Contributors:
+Serena Edwards 2306227
+Deondre Williams 2307492
+Joshua Ivey 2305263
+Roneil Webster 2306227
+Leary White 2403275
+
+Module: Web Programming (CIT2011)
 Lecturer: Ms. Christine Anuli
-Module: Web Programming
-Occurrence: UM2
-Day and Time: Thursday 1pm - 3pm
+Occurrence: UM2 (Thursday 1pm - 3pm)
+Assignment: Group Project
 */
 
 /*CSS Variables*/
@@ -1404,7 +1409,8 @@ textarea {
 
 /* --- Invoice Search in Sidebar --- */
 .search-invoice {
-  margin-top: 20px !important; /* Override inline style if needed */
+  margin-top: 20px !important;
+  /* Override inline style if needed */
   padding-top: 15px;
   border-top: 1px solid rgba(0, 0, 0, 0.2);
   display: flex;
@@ -1414,14 +1420,14 @@ textarea {
 }
 
 .search-invoice input {
-  width: 90% !important; 
+  width: 90% !important;
   padding: 10px;
   border: 2px solid #333;
   border-radius: 6px;
   font-size: 14px;
   background-color: var(--form-color);
   box-sizing: border-box;
-  margin-bottom: 0 !important; 
+  margin-bottom: 0 !important;
 }
 
 .search-invoice button {
@@ -1442,6 +1448,7 @@ textarea {
   color: black;
   transform: scale(1.02);
 }
+
 /*--Locked Page--*/
 /* Scope everything inside .locked-page to avoid conflicts */
 .locked-page {
@@ -1459,7 +1466,7 @@ textarea {
   padding: 30px;
   border-radius: 10px;
   text-align: center;
-  box-shadow: 0 0 12px rgba(0,0,0,0.1);
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
 }
 
 /* Lock icon */
@@ -1500,64 +1507,64 @@ textarea {
 
 /*Reset Password Page*/
 .reset-page {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
 }
 
 /* Card container */
 .reset-page .reset-container {
-    background: white;
-    width: 350px;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 0 12px rgba(0,0,0,0.1);
-    text-align: center;
+  background: white;
+  width: 350px;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+  text-align: center;
 }
 
 /* Title */
 .reset-page .reset-title {
-    font-size: 26px;
-    margin-bottom: 10px;
-    color: var(--main-color);
+  font-size: 26px;
+  margin-bottom: 10px;
+  color: var(--main-color);
 }
 
 /* Description text */
 .reset-page .reset-description {
-    color: #555;
-    font-size: 14px;
-    margin-bottom: 20px;
+  color: #555;
+  font-size: 14px;
+  margin-bottom: 20px;
 }
 
 /* Label */
 .reset-page .reset-label {
-    display: block;
-    text-align: left;
-    margin-bottom: 5px;
-    font-weight: bold;
+  display: block;
+  text-align: left;
+  margin-bottom: 5px;
+  font-weight: bold;
 }
 
 /* Input field */
 .reset-page .reset-input {
-    width: 100%;
-    padding: 12px;
-    margin-bottom: 20px;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-    font-size: 16px;
-    box-sizing: border-box;
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  box-sizing: border-box;
 }
 
 /* Submit button */
 .reset-page .reset-btn {
-    width: 100%;
-    padding: 12px;
-    font-size: 16px;
-    border: none;
-    border-radius: 8px;
-    background-color: var(--main-color);
-    color: white;
-    cursor: pointer;
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  background-color: var(--main-color);
+  color: white;
+  cursor: pointer;
 }

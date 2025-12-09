@@ -1,3 +1,16 @@
+/*
+Contributors:
+Serena Edwards 2306227
+Deondre Williams 2307492
+Joshua Ivey 2305263
+Roneil Webster 2306227
+Leary White 2403275
+
+Module: Web Programming (CIT2011)
+Lecturer: Ms. Christine Anuli
+Occurrence: UM2 (Thursday 1pm - 3pm)
+Assignment: Group Project
+*/
 console.log("JavaScript is running..."); //make sure java is connected
 
 // ---------------- Registration Script ----------------
