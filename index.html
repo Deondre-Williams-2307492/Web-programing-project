@@ -1,0 +1,92 @@
+<!--Name: Serena Edwards
+    ID: 2306227
+    Lecturer: Ms. Christine Anuli
+    Module Name: Web Programming
+    Occurrence: UM2
+    Day and Time: Thursday 1pm to 3pm-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stitch & Thread Co. - Register</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="register-container">
+    <!-- Left column: Image -->
+    <div class="register-left">
+        <img src="registerCrochet.jpg" alt="Stitch & Thread Yarn">
+    </div>
+
+    <!-- Right column: Form -->
+    <div class="register-right">
+        <h2 id="pageName">Register An Account</h2>
+        <form id="registerForm">
+    <!-- Split name into first and last -->
+    <div class="input">
+        <label for="firstName">First Name:</label>
+        <input type="text" id="firstName" placeholder="Enter First Name" required>
+    </div>
+    <div class="input">
+        <label for="lastName">Last Name:</label>
+        <input type="text" id="lastName" placeholder="Enter Last Name" required>
+    </div>
+    
+    <!-- Keep existing DOB field -->
+    <div class="input">
+        <label for="dob">Date of Birth:</label>
+        <input type="date" id="dob" required>
+    </div>
+    
+    <!-- Keep existing gender field -->
+    <div class="input">
+        <label for="gender">Gender:</label>
+        <select id="gender" required>
+            <option value="">Select Gender</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
+        </select>
+    </div>
+    
+    <!-- Add password confirmation -->
+    <div class="input">
+        <label for="password">Password (min 8 characters):</label>
+        <input type="password" id="password" placeholder="Enter Password" required minlength="8">
+    </div>
+    <div class="input">
+        <label for="confirmPassword">Confirm Password:</label>
+        <input type="password" id="confirmPassword" placeholder="Confirm Password" required>
+    </div>
+    
+    <!-- Keep other fields -->
+    <div class="input">
+        <label for="phone">Phone Number:</label>
+        <input type="tel" id="phone" placeholder="876-123-4567" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required>
+    </div>
+    <div class="input">
+        <label for="email">Email:</label>
+        <input type="email" id="email" placeholder="you@example.com" required>
+    </div>
+    <div class="input">
+        <label for="username">TRN (000-000-000 format):</label>
+        <input type="text" id="username" placeholder="123-456-789" pattern="[0-9]{3}-[0-9]{3}-[0-9]{3}" required>
+    </div>
+    
+    <!-- Add Cancel button -->
+    <button type="submit" id="signupBTN" class="signupBTN">Register</button>
+    <button type="button" id="cancelBtn" class="cancelBTN">Cancel</button>
+    
+    <p>Have an Account?  
+        <button id="goTologinBTN" type="button" class="loginBTN">Login</button> 
+    </p>
+</form>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
