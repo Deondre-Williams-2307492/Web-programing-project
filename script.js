@@ -796,12 +796,23 @@ function ShowInvoices(searchTRN = null) {
   console.log("--- Showing Invoices ---");
 
   if (searchTRN) {
+    // Debugging Check keys of first invoice
+    if (invoices.length > 0) {
+      console.log("DEBUG: Keys in first invoice:", Object.keys(invoices[0]));
+      console.log("DEBUG: Value of 'user' in first invoice:", invoices[0].user);
+    }
+
     // Filter by TRN (username)
-    const results = invoices.filter(inv => inv.user === searchTRN);
+    // Note: ensure 'user' field in order matches the TRN format exactly
+    const results = invoices.filter(inv => inv.user.trim() === searchTRN.trim());
+
     console.log(`Found ${results.length} invoices for TRN: ${searchTRN}`);
-    console.log(results);
+    console.table(results);
+
     if (results.length === 0) {
-      alert("No invoices found for this TRN.");
+      alert(`No invoices found for TRN: ${searchTRN}. \nTip: Ensure format is 000-000-000.`);
+    } else {
+      alert(`Found ${results.length} invoices for TRN: ${searchTRN}. Check the console.`);
     }
   } else {
     // Display all
