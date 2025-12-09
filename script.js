@@ -810,3 +810,41 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
+// ---------------- Get User Invoices  ----------------
+function GetUserInvoices() {
+  //  Get all registered users
+  const users = JSON.parse(localStorage.getItem("RegistrationData")) || [];
+
+  // Get all invoices
+  let allInvoices = JSON.parse(localStorage.getItem("AllInvoices")) || [];
+  if (allInvoices.length === 0) {
+    allInvoices = JSON.parse(localStorage.getItem("orders")) || [];
+  }
+
+  console.log("--- Generating User Invoices Report ---");
+
+  if (users.length === 0) {
+    console.log("No registered users found.");
+    return;
+  }
+
+  //  Iterate through each user and find their invoices
+  users.forEach(user => {
+    const userTRN = user.username; // TRN is stored as username
+    const fullName = `${user.firstName} ${user.lastName}`;
+
+    // Filter invoices for this specific user
+    const userInvoices = allInvoices.filter(inv => inv.user === userTRN);
+
+    if (userInvoices.length > 0) {
+      console.log(`\nUser: ${fullName} (TRN: ${userTRN})`);
+      console.log(`Total Invoices: ${userInvoices.length}`);
+      console.table(userInvoices);
+    } else {
+      console.log(`\nUser: ${fullName} (TRN: ${userTRN}) has no invoices.`);
+    }
+  });
+
+  console.log("\n--- End of Report ---");
+}
+
