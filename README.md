@@ -51,3 +51,33 @@ Since this application uses your browser's **Local Storage** to save data, there
 *   **Dashboard:** View platform statistics (Gender and Age demographics of registered users).
 *   **Invoice Search:** Ability to search for invoices by TRN.
 *   **Responsive Design:** Optimized for Mobile, Tablet, and Desktop views.
+
+## 🗺️ Site Map
+```mermaid
+graph TD
+    A[index.html (Register)] --> B[logIn.html (Login)]
+    B --> C[aboutUs.html (Home)]
+    
+    subgraph Main Navigation
+    C --> D[products.html]
+    C --> E[cart.html]
+    C --> F[contactUs.html]
+    end
+    
+    subgraph Products
+    D --> D1[Clothes]
+    D --> D2[Bags]
+    D --> D3[Jewelry]
+    end
+    
+    subgraph User Account
+    C --> G[Sidebar Menu]
+    G --> H[profile.html]
+    G --> I[orders.html]
+    G --> J[dashboard.html]
+    end
+    
+    subgraph Cart Flow
+    E --> K[checkout.html]
+    end
+```
