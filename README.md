@@ -4,7 +4,7 @@ Welcome to the **Stitch & Thread Co.** web application! This project is a functi
 
 ## 👥 Contributors
 *   **Serena Edwards** 2306227
-* **Deondre Williams** 230749
+* **Deondre Williams** 2307492
 * **Joshua Ivey** 2305263
 * **Roneil Webster** 2306227
 * **Leary White**2403275
