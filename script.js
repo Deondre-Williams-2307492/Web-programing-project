@@ -123,13 +123,13 @@ if (loginForm) {
     const enteredUsername = document.getElementById("loginUsername").value.trim();
     const enteredPassword = document.getElementById("loginPassword").value.trim();
 
-    const users = JSON.parse(localStorage.getItem("users")) || [];
+    const users = JSON.parse(localStorage.getItem("RegistrationData")) || [];
 
     const user = users.find(u => u.username === enteredUsername && u.password === enteredPassword); //search for a user that matches the log in info
 
     if (user) {
       console.log("Login successful:", user);
-      alert("Welcome, " + user.name + "! Redirecting to About Us...");
+      alert("Welcome, " + user.firstName + "! Redirecting to About Us...");
 
       localStorage.setItem("loggedInUser", JSON.stringify(user)); //allows other pages to know what user is logged in
       window.location.href = "aboutUs.html";
@@ -656,7 +656,7 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    document.getElementById("userName").textContent = loggedInUser.name;
+    document.getElementById("userName").textContent = `${loggedInUser.firstName} ${loggedInUser.lastName}`;
     document.getElementById("userDOB").textContent = loggedInUser.dob;
     document.getElementById("userEmail").textContent = loggedInUser.email;
     document.getElementById("userUsername").textContent = loggedInUser.username;
