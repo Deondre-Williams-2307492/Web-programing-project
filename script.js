@@ -815,7 +815,7 @@ function ShowInvoices(searchTRN = null) {
       alert(`Found ${results.length} invoices for TRN: ${searchTRN}. Check the console.`);
     }
   } else {
-    // Display all
+    // Display all invoices in the console
     console.log("All Invoices:", invoices);
   }
 }
