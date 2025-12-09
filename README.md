@@ -2,8 +2,13 @@
 
 Welcome to the **Stitch & Thread Co.** web application! This project is a functional e-commerce website for a Jamaican crochet company, featuring user registration, product browsing, a shopping cart, and order management.
 
-## 👥 Group Members / Author Details
-*   **Name:** Serena Edwards 2306227, Deondre Williams 230749
+## 👥 Contributors
+*   **Serena Edwards** 2306227
+* **Deondre Williams** 230749
+* **Joshua Ivey** 2305263
+* **Roneil Webster** 2306227
+* **Leary White**2403275
+
 *   **Module:** Web Programming (CIT2011)
 *   **Lecturer:** Ms. Christine Anuli
 *   **Occurrence:** UM2 (Thursday 1pm - 3pm)
