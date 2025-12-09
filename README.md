@@ -56,7 +56,7 @@ Since this application uses your browser's **Local Storage** to save data, there
 ```mermaid
 graph TD
     A[index.html Register] --> B[logIn.html Login]
-    B --> C[aboutUs.html Home]
+    B --> C[about Us (Home)]
     
     subgraph Main Navigation
     C --> D[products.html]
