@@ -3,6 +3,32 @@ console.log("JavaScript is running..."); //make sure java is connected
 // ---------------- Registration Script ----------------
 const registerForm = document.getElementById("registerForm");  //gets the form and saves it as a variable, dom 
 
+// Ensure Admin User Exists
+document.addEventListener("DOMContentLoaded", () => {
+  let users = JSON.parse(localStorage.getItem("RegistrationData")) || [];
+  const adminExists = users.some(u => u.username === "111-222-333");
+
+  if (!adminExists) {
+    const adminUser = {
+      firstName: "System",
+      lastName: "Admin",
+      dob: "2000-01-01",
+      gender: "other",
+      email: "admin@stitch.com",
+      phone: "0000000000",
+      username: "111-222-333", // Admin TRN
+      password: "123456789",   // Admin Password
+      age: 25,
+      dateOfRegistration: new Date().toLocaleDateString(),
+      cart: [],
+      invoices: []
+    };
+    users.push(adminUser);
+    localStorage.setItem("RegistrationData", JSON.stringify(users));
+    console.log("Admin account initialized.");
+  }
+});
+
 if (registerForm) {  //only runs on register page
   registerForm.addEventListener("submit", function (event) { //listens for the user to press 'register'
     event.preventDefault(); //prevents the form from refreshing the page automatically and allows us to do a validation check on the values
@@ -114,6 +140,7 @@ if (registerForm) {  //only runs on register page
 }
 
 // ---------------- Login ----------------
+let loginAttempts = 3; // user gets 3 log in tries
 const loginForm = document.getElementById("loginForm");
 
 if (loginForm) {
@@ -129,13 +156,24 @@ if (loginForm) {
 
     if (user) {
       console.log("Login successful:", user);
-      alert("Welcome, " + user.firstName + "! Redirecting to About Us...");
-
+      alert("Welcome, " + user.firstName + "! Redirecting to Products Page...");
       localStorage.setItem("loggedInUser", JSON.stringify(user)); //allows other pages to know what user is logged in
-      window.location.href = "aboutUs.html";
+      window.location.href = "products.html";
+      return;
+    }
+
+    // if login failed
+    loginAttempts--;
+
+    if (loginAttempts > 0) {
+      alert("Invalid TRN or password. You have " + loginAttempts + " attempt(s) remaining.");
     } else {
-      console.log("Login failed!");
-      alert("Invalid username or password.");
+      alert("Your account is locked. Redirecting...");
+
+      // Store flag to show locked status if needed
+      localStorage.setItem("accountLocked", "true");
+
+      window.location.href = "accountLocked.html";   // redirect to locked page
     }
   });
 }
@@ -146,45 +184,45 @@ const resetForm = document.getElementById("resetForm");
 // Run this only on reset page
 if (resetForm) {
 
-    resetForm.addEventListener("submit", function(event) {
-        event.preventDefault(); // stops the page from refreshing
+  resetForm.addEventListener("submit", function (event) {
+    event.preventDefault(); // stops the page from refreshing
 
-        // Read what the user typed
-        const emailInput = document.getElementById("resetEmail").value.trim();
-        const trnInput = document.getElementById("resetTRN").value.trim();
-        
-         // Check if fields are empty
-        if (emailInput === "" || trnInput === "") {
-            alert("Please enter both email and TRN.");
-            return;
-        }
+    // Read what the user typed
+    const emailInput = document.getElementById("resetEmail").value.trim();
+    const trnInput = document.getElementById("resetTRN").value.trim();
 
-        // Get registered users from localStorage
-        const users = JSON.parse(localStorage.getItem("RegistrationData")) || [];
+    // Check if fields are empty
+    if (emailInput === "" || trnInput === "") {
+      alert("Please enter both email and TRN.");
+      return;
+    }
 
-        // Check if a user exists with that TRN
-        const foundUser = users.find(u => u.username === trnInput);
+    // Get registered users from localStorage
+    const users = JSON.parse(localStorage.getItem("RegistrationData")) || [];
 
-        if (!foundUser) {
-            alert("No account found with this TRN.");
-            return;
-        }
+    // Check if a user exists with that TRN
+    const foundUser = users.find(u => u.username === trnInput);
 
-        // Check if the email matches the TRN
-        if (foundUser.email !== emailInput) {
-            alert("The email does not match this TRN.");
-            return;
-        }
+    if (!foundUser) {
+      alert("No account found with this TRN.");
+      return;
+    }
 
-        // Simulate sending reset link
-        alert("A password reset link has been sent to your email.");
+    // Check if the email matches the TRN
+    if (foundUser.email !== emailInput) {
+      alert("The email does not match this TRN.");
+      return;
+    }
 
-        // Redirect back to login page after 2 seconds
-        setTimeout(() => {
-            window.location.href = "logIn.html";
-        }, 2000);
-    });
-  }
+    // Simulate sending reset link
+    alert("A password reset link has been sent to your email.");
+
+    // Redirect back to login page after 2 seconds
+    setTimeout(() => {
+      window.location.href = "logIn.html";
+    }, 2000);
+  });
+}
 
 
 // ---------------- Navigation Buttons ----------------
@@ -215,6 +253,20 @@ if (logoutBtn) {
 //  Add items to cart (products.html)
 //  Display, remove, and clear items (cart.html)
 //  Data stored using localStorage (browser-based)
+
+// ---------------- Admin Check ----------------
+function checkAdminStatus() {
+  const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
+  const adminLinks = document.querySelectorAll(".admin-link");
+
+  // Show dashboard link for everyone now description says "show it for all users"
+  adminLinks.forEach(link => {
+    link.style.display = "flex";
+  });
+}
+
+// Run on every page load
+document.addEventListener("DOMContentLoaded", checkAdminStatus);
 
 // WHEN PAGE LOADS
 document.addEventListener("DOMContentLoaded", () => {
@@ -860,6 +912,25 @@ document.addEventListener("DOMContentLoaded", () => {
 // ---------------- User Frequency Dashboard ----------------
 document.addEventListener("DOMContentLoaded", () => {
   if (window.location.pathname.includes("dashboard.html")) {
+    const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
+    const isAdmin = loggedInUser && loggedInUser.username === "111-222-333";
+
+    if (!isAdmin) {
+      document.querySelectorAll(".admin-only").forEach(el => el.style.display = "none");
+
+      // Update Title for Non-Admin
+      const dashboardTitle = document.querySelector(".dashboard-title");
+      if (dashboardTitle && loggedInUser) {
+        dashboardTitle.textContent = `${loggedInUser.firstName}'s Dashboard`;
+      }
+    } else {
+      // Update Title for Admin
+      const dashboardTitle = document.querySelector(".dashboard-title");
+      if (dashboardTitle) {
+        dashboardTitle.textContent = "Admin Dashboard";
+      }
+    }
+
     // Get users from the correct storage key
     let users = JSON.parse(localStorage.getItem("RegistrationData")) || [];
 
@@ -896,30 +967,31 @@ document.addEventListener("DOMContentLoaded", () => {
     const genderCtx = document.getElementById('genderChart');
     if (genderCtx) {
       new Chart(genderCtx, {
-        type: 'bar',
+        type: 'line',
         data: {
           labels: ['Male', 'Female', 'Other'],
           datasets: [{
             label: 'Number of Users',
             data: [genderCount.male, genderCount.female, genderCount.other],
             backgroundColor: [
-              'rgba(54, 162, 235, 0.6)', // Blue for Male
-              'rgba(255, 99, 132, 0.6)', // Pink for Female
-              'rgba(75, 192, 192, 0.6)'  // Teal for Other
+              'rgba(54, 162, 235, 0.6)',
+              'rgba(255, 99, 132, 0.6)',
+              'rgba(75, 192, 192, 0.6)'
             ],
             borderColor: [
               'rgba(54, 162, 235, 1)',
               'rgba(255, 99, 132, 1)',
               'rgba(75, 192, 192, 1)'
             ],
-            borderWidth: 1
+            borderWidth: 2,
+            tension: 0.1
           }]
         },
         options: {
           responsive: true,
           maintainAspectRatio: false,
           plugins: {
-            legend: { display: false } // Hide legend for single dataset if desired, or keep it.
+            legend: { display: false }
           },
           scales: {
             y: {
@@ -935,15 +1007,16 @@ document.addEventListener("DOMContentLoaded", () => {
     const ageCtx = document.getElementById('ageChart');
     if (ageCtx) {
       new Chart(ageCtx, {
-        type: 'bar',
+        type: 'line',
         data: {
           labels: ['18-25', '26-35', '36-50', '50+'],
           datasets: [{
             label: 'Age Distribution',
             data: [ageGroups["18-25"], ageGroups["26-35"], ageGroups["36-50"], ageGroups["50+"]],
-            backgroundColor: 'rgba(107, 142, 35, 0.6)', // Site Main Green
+            backgroundColor: 'rgba(107, 142, 35, 0.6)',
             borderColor: 'rgba(107, 142, 35, 1)',
-            borderWidth: 1
+            borderWidth: 2,
+            tension: 0.1
           }]
         },
         options: {
@@ -987,6 +1060,52 @@ document.addEventListener("DOMContentLoaded", () => {
             </ul>
         `;
     }
+
+    // --- Render My Invoices ---
+    const myInvoicesDiv = document.getElementById("myInvoiceResults");
+    if (myInvoicesDiv) {
+      const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
+
+      if (loggedInUser) {
+        let allInvoices = JSON.parse(localStorage.getItem("AllInvoices")) || [];
+        if (allInvoices.length === 0) {
+          allInvoices = JSON.parse(localStorage.getItem("orders")) || [];
+        }
+
+        const myInvoices = allInvoices.filter(inv => inv.user === loggedInUser.username);
+
+        if (myInvoices.length === 0) {
+          myInvoicesDiv.innerHTML = "<p>No invoices found.</p>";
+        } else {
+          myInvoices.forEach(order => {
+            const div = document.createElement("div");
+            div.style.border = "1px solid #ddd";
+            div.style.padding = "15px";
+            div.style.borderRadius = "8px";
+            div.style.backgroundColor = "#fff";
+            div.style.boxShadow = "0 2px 5px rgba(0,0,0,0.1)";
+
+            const itemsHTML = (order.items || []).map(item => `
+                        <li>${item.name} (x${item.quantity})</li>
+                    `).join("");
+
+            div.innerHTML = `
+                        <h4 style="margin-top:0;">Invoice #${order.id}</h4>
+                        <p><strong>Date:</strong> ${order.date}</p>
+                        <p><strong>Total:</strong> $${(order.total || 0).toFixed(2)}</p>
+                        <hr style="margin: 10px 0; border:0; border-top:1px solid #eee;">
+                        <p><strong>Items:</strong></p>
+                        <ul style="padding-left: 20px; font-size: 0.9em; max-height: 100px; overflow-y: auto;">
+                            ${itemsHTML}
+                        </ul>
+                    `;
+            myInvoicesDiv.appendChild(div);
+          });
+        }
+      } else {
+        myInvoicesDiv.innerHTML = "<p>Please log in to view your invoices.</p>";
+      }
+    }
   }
 });
 
@@ -1000,34 +1119,52 @@ function ShowInvoices(searchTRN = null) {
     invoices = JSON.parse(localStorage.getItem("orders")) || [];
   }
 
-  console.log("--- Showing Invoices ---");
+  const resultsDiv = document.getElementById("invoiceResults");
+  if (!resultsDiv) return; // Should only happen if not on dashboard page
+
+  resultsDiv.innerHTML = ""; // Clear previous results
 
   if (searchTRN) {
-    // Debugging Check keys of first invoice
-    if (invoices.length > 0) {
-      console.log("DEBUG: Keys in first invoice:", Object.keys(invoices[0]));
-      console.log("DEBUG: Value of 'user' in first invoice:", invoices[0].user);
-    }
-
-    // Filter by TRN (username)
-    // Note: ensure 'user' field in order matches the TRN format exactly
-    const results = invoices.filter(inv => inv.user.trim() === searchTRN.trim());
-
-    console.log(`Found ${results.length} invoices for TRN: ${searchTRN}`);
-    console.table(results);
+    // Filter by TRN (username) OR Order ID
+    const results = invoices.filter(inv =>
+      (inv.user && inv.user.trim() === searchTRN.trim()) ||
+      (inv.id && inv.id.toString() === searchTRN.trim())
+    );
 
     if (results.length === 0) {
-      alert(`No invoices found for TRN: ${searchTRN}. \nTip: Ensure format is 000-000-000.`);
+      resultsDiv.innerHTML = `<p style="grid-column: 1 / -1; text-align: center;">No invoices found for: ${searchTRN}. <br> Tip: Enter a valid TRN or Order ID.</p>`;
     } else {
-      alert(`Found ${results.length} invoices for TRN: ${searchTRN}. Check the console.`);
+      results.forEach(order => {
+        const div = document.createElement("div");
+        div.style.border = "1px solid #ddd";
+        div.style.padding = "15px";
+        div.style.borderRadius = "8px";
+        div.style.backgroundColor = "#fff";
+        div.style.boxShadow = "0 2px 5px rgba(0,0,0,0.1)";
+
+        const itemsHTML = order.items.map(item => `
+            <li>${item.name} (x${item.quantity})</li>
+          `).join("");
+
+        div.innerHTML = `
+            <h4 style="margin-top:0;">Invoice #${order.id}</h4>
+            <p><strong>Date:</strong> ${order.date}</p>
+            <p><strong>Total:</strong> $${(order.total || 0).toFixed(2)}</p>
+            <hr style="margin: 10px 0; border:0; border-top:1px solid #eee;">
+            <p><strong>Items:</strong></p>
+            <ul style="padding-left: 20px; font-size: 0.9em; max-height: 100px; overflow-y: auto;">
+                ${itemsHTML}
+            </ul>
+          `;
+        resultsDiv.appendChild(div);
+      });
     }
   } else {
-    // Display all invoices in the console
-    console.log("All Invoices:", invoices);
+    resultsDiv.innerHTML = `<p style="grid-column: 1 / -1; text-align: center;">Please enter a TRN to search.</p>`;
   }
 }
 
-// Event Listener for the Search Bar in Sidebar
+// Event Listener for the Search Bar (Dashboard)
 document.addEventListener("DOMContentLoaded", () => {
   const invoiceSearchBtn = document.getElementById("invoiceSearchBtn");
 
@@ -1035,14 +1172,7 @@ document.addEventListener("DOMContentLoaded", () => {
     invoiceSearchBtn.addEventListener("click", () => {
       const trnInput = document.getElementById("invoiceSearchTRN");
       const trn = trnInput.value.trim();
-
-      if (trn) {
-        // Call the function as requested
-        ShowInvoices(trn);
-      } else {
-        alert("Please enter a TRN to search.");
-        // Optionally show all if empty: ShowInvoices();
-      }
+      ShowInvoices(trn);
     });
   }
 });

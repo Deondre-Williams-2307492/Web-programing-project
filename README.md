@@ -40,7 +40,7 @@ This project was built using standard web technologies without external framewor
 ## 🔐 Login Credentials
 Since this application uses your browser's **Local Storage** to save data, there are no pre-existing accounts when you first run it.
 
-**To Log In:**
+**To Log In (User):**
 1.  Go to the **Register** page (`index.html`).
 2.  Fill out the form with your details.
     *   **Note:** You must be 18+ years old.
@@ -50,14 +50,21 @@ Since this application uses your browser's **Local Storage** to save data, there
 4.  You will be redirected to the **Login** page.
 5.  Enter the **Username (TRN)** and **Password** you just created to access the site.
 
+**To Log In (Admin):**
+*   **TRN:** 111-222-333
+*   **Password:** 123456789
+*   *Access exclusive analytics and user demographic charts.*
+
 ## 📊 Features
 *   **User Authentication:** Registration and Login with validation.
 *   **Product Catalog:** diverse categories (Clothes, Bags, Jewelry) with size and quantity selection.
 *   **Shopping Cart:** Add, remove, and manage items; automatic tax and discount calculations.
 *   **Checkout:** Simulate a checkout process with shipping and payment validation.
 *   **Order History:** Users can view their past orders.
-*   **Enhanced Dashboard:** visualize user demographics with interactive **Charts** (Gender & Age) and read automated data summaries.
-*   **Invoice Search:** Ability to search for invoices by TRN with instant feedback.
+*   **Dynamic Dashboard:**
+    *   **Admins:** View interactive **Charts** (Gender & Age) and data summaries.
+    *   **Users:** View personal **My Invoices** list directly on the dashboard.
+*   **Advanced Invoice Search:** functionality located on the dashboard to search invoices by **TRN** or **Order ID**.
 *   **Responsive Design:** Fully optimized for Mobile, Tablet, and Desktop views.
 
 ## 🗺️ Site Map

@@ -12,26 +12,55 @@
 <body class="dashboard-body">
 
     <div class="dashboard-container">
-        <h1 class="dashboard-title">User Frequency Dashboard</h1>
+        <h1 class="dashboard-title">Dashboard</h1>
 
-        <section class="dashboard-card">
+
+
+
+
+        <section class="dashboard-card admin-only">
             <h2 class="dashboard-card-title">Gender Frequency</h2>
             <div class="chart-container" style="position: relative; height:300px; width:100%">
                 <canvas id="genderChart"></canvas>
             </div>
         </section>
 
-        <section class="dashboard-card">
+        <section class="dashboard-card admin-only">
             <h2 class="dashboard-card-title">Age Group Frequency</h2>
             <div class="chart-container" style="position: relative; height:300px; width:100%">
                 <canvas id="ageChart"></canvas>
             </div>
         </section>
 
-        <section class="dashboard-card">
+        <section class="dashboard-card admin-only">
             <h2 class="dashboard-card-title">Summary</h2>
             <div id="dashboardSummaryText" style="font-size: 18px; line-height: 1.6;"></div>
         </section>
+
+        <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+            <section class="dashboard-card" style="flex: 1; min-width: 300px;">
+                <h2 class="dashboard-card-title">My Invoices</h2>
+                <div id="myInvoiceResults"
+                    style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 15px; width: 100%;">
+                    <!-- My invoices will be rendered here -->
+                </div>
+            </section>
+
+            <section class="dashboard-card" style="flex: 1; min-width: 300px;">
+                <h2 class="dashboard-card-title">Search Invoices</h2>
+                <div class="search-invoice"
+                    style="display: flex; gap: 10px; justify-content: center; align-items: center; margin-bottom: 20px;">
+                    <input type="text" id="invoiceSearchTRN" placeholder="Search Invoice (TRN or Order ID)"
+                        style="padding: 10px; width: 70%; border: 1px solid #ccc; border-radius: 5px;">
+                    <button id="invoiceSearchBtn"
+                        style="padding: 10px 20px; background-color: var(--main-color); color: white; border: none; border-radius: 5px; cursor: pointer;">Search</button>
+                </div>
+                <div id="invoiceResults"
+                    style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 15px; width: 100%;">
+                    <!-- Results will be rendered here -->
+                </div>
+            </section>
+        </div>
 
         <!-- Back to Account Button -->
         <button onclick="window.location.href='profile.html'" class="signupBTN"
