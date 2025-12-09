@@ -58,7 +58,7 @@ Since this application uses your browser's **Local Storage** to save data, there
 *   **Order History:** Users can view their past orders.
 *   **Enhanced Dashboard:** visualize user demographics with interactive **Charts** (Gender & Age) and read automated data summaries.
 *   **Invoice Search:** Ability to search for invoices by TRN with instant feedback.
-*   **Responsive Design:** Fully optimized for Mobile, Tablet, and Desktop views, featuring a **collapsible sidebar** menu for smaller screens.
+*   **Responsive Design:** Fully optimized for Mobile, Tablet, and Desktop views.
 
 ## 🗺️ Site Map
 ```mermaid
