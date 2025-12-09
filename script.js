@@ -934,7 +934,9 @@ document.addEventListener("DOMContentLoaded", () => {
       // Update Title for Non-Admin
       const dashboardTitle = document.querySelector(".dashboard-title");
       if (dashboardTitle && loggedInUser) {
-        dashboardTitle.textContent = `${loggedInUser.firstName}'s Dashboard`;
+        const firstName = loggedInUser.firstName;
+        const capitalizedFirstName = firstName.charAt(0).toUpperCase() + firstName.slice(1);
+        dashboardTitle.textContent = `${capitalizedFirstName}'s Dashboard`;
       }
     } else {
       // Update Title for Admin
