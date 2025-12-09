@@ -4,7 +4,7 @@ console.log("JavaScript is running..."); //make sure java is connected
 const registerForm = document.getElementById("registerForm");  //gets the form and saves it as a variable, dom 
 
 if (registerForm) {  //only runs on register page
-  registerForm.addEventListener("submit", function(event) { //listens for the user to press 'register'
+  registerForm.addEventListener("submit", function (event) { //listens for the user to press 'register'
     event.preventDefault(); //prevents the form from refreshing the page automatically and allows us to do a validation check on the values
 
     // Get input values - UPDATED: Added firstName, lastName, confirmPassword fields
@@ -21,7 +21,7 @@ if (registerForm) {  //only runs on register page
     // Validate inputs - UPDATED: Added validation for firstName, lastName, confirmPassword
     if (!firstName || !lastName || !dob || !gender || !email || !phone || !username || !password || !confirmPassword) {  //ensures all fields are populated and displays an error message
       alert("All fields are required!");
-      return;  
+      return;
     }
 
     // NEW REQUIREMENT: Age validation (must be 18 or older)
@@ -29,11 +29,11 @@ if (registerForm) {  //only runs on register page
     const today = new Date();
     let age = today.getFullYear() - birthDate.getFullYear();
     const monthDiff = today.getMonth() - birthDate.getMonth();
-    
+
     if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
       age--;
     }
-    
+
     if (age < 18) {
       alert("You must be at least 18 years old to register.");
       return;
@@ -57,7 +57,7 @@ if (registerForm) {  //only runs on register page
     }
 
     const usernamePattern = /^\d{3}-\d{3}-\d{3}$/;
-    if(!username.match(usernamePattern)) {
+    if (!username.match(usernamePattern)) {
       alert("Please use the 000-000-000 pattern to enter your Tax Registration Number");
       return;
     }
@@ -72,13 +72,13 @@ if (registerForm) {  //only runs on register page
     }
 
     // Create new user if they pass all other validation checks - UPDATED: Added firstName, lastName, age, cart[], invoices[]
-    const newUser = 
-    { 
+    const newUser =
+    {
       firstName: firstName,
       lastName: lastName,
-      dob: dob, 
+      dob: dob,
       gender: gender,
-      email: email, 
+      email: email,
       phone: phone,
       username: username, //this is trn
       password: password,
@@ -99,15 +99,15 @@ if (registerForm) {  //only runs on register page
     alert("Registration successful! Please log in.");
 
     setTimeout(() => {
-    window.location.href = "logIn.html";
+      window.location.href = "logIn.html";
     }, 3000); // 3 seconds delay
-  
+
   });
 
   // NEW REQUIREMENT: Cancel button functionality
   const cancelBtn = document.getElementById("cancelBtn");
   if (cancelBtn) {
-    cancelBtn.addEventListener("click", function() {
+    cancelBtn.addEventListener("click", function () {
       registerForm.reset(); // Clears all form fields
     });
   }
@@ -117,7 +117,7 @@ if (registerForm) {  //only runs on register page
 const loginForm = document.getElementById("loginForm");
 
 if (loginForm) {
-  loginForm.addEventListener("submit", function(event) {
+  loginForm.addEventListener("submit", function (event) {
     event.preventDefault();
 
     const enteredUsername = document.getElementById("loginUsername").value.trim();
@@ -132,7 +132,7 @@ if (loginForm) {
       alert("Welcome, " + user.name + "! Redirecting to About Us...");
 
       localStorage.setItem("loggedInUser", JSON.stringify(user)); //allows other pages to know what user is logged in
-      window.location.href = "aboutUs.html";  
+      window.location.href = "aboutUs.html";
     } else {
       console.log("Login failed!");
       alert("Invalid username or password.");
@@ -143,26 +143,26 @@ if (loginForm) {
 // ---------------- Navigation Buttons ----------------
 const goToSignupBTN = document.getElementById("goToSignupBTN");
 if (goToSignupBTN) {
-  goToSignupBTN.addEventListener("click", function() {
+  goToSignupBTN.addEventListener("click", function () {
     window.location.href = "index.html";
   });
 }
 
 const goTologinBTN = document.getElementById("goTologinBTN");
 if (goTologinBTN) {
-  goTologinBTN.addEventListener("click", function() {
+  goTologinBTN.addEventListener("click", function () {
     window.location.href = "logIn.html";
   });
 }
 
 // logout button on the side bar
- const logoutBtn = document.getElementById("logoutBtn");
+const logoutBtn = document.getElementById("logoutBtn");
 
 if (logoutBtn) {
-    logoutBtn.addEventListener("click", () => {
-        alert("You have been logged out.");
-        window.location.href = "logIn.html";
-    });
+  logoutBtn.addEventListener("click", () => {
+    alert("You have been logged out.");
+    window.location.href = "logIn.html";
+  });
 }
 
 // 1. Add items to cart (products.html)
@@ -188,7 +188,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // Check if this product has a size dropdown (clothes only)
         const sizeDropdown = card.querySelector(".size");
         let size = null; // default for jewelry / non-sized items
-        
+
         if (sizeDropdown) {
           size = sizeDropdown.value; // get selected size
         }
@@ -230,7 +230,7 @@ function saveToCart(product) {
 
   // Check if same name + size combo already exists
   const existingItem = cart.find(
-    i => i.name === product.name && (i.size ?? null) === (product.size ?? null)  
+    i => i.name === product.name && (i.size ?? null) === (product.size ?? null)
   );
 
   if (existingItem) { //if it does increase quantity
@@ -454,7 +454,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     displayCheckoutItems();
 
-   // If user picks Card: show card details, If user picks PayPal or Venmo: hide card fields
+    // If user picks Card: show card details, If user picks PayPal or Venmo: hide card fields
     paymentSelect.addEventListener("change", () => {
       cardInfo.style.display = paymentSelect.value === "card" ? "block" : "none";
     });
@@ -475,10 +475,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (payment === "paypal") {
         window.open("https://www.paypal.com/paypalme/StitchAndThreadCo", "_blank");
-      } 
+      }
       else if (payment === "venmo") {
         window.open("https://venmo.com/YourVenmoUsername", "_blank");
-      } 
+      }
       else if (payment === "card") {
         const cardNumber = document.getElementById("cardNumber").value.trim();
         if (cardNumber.length < 16) {
@@ -557,10 +557,10 @@ Shipping to: ${address}`);
       }
     });
 
-   document.getElementById("close").addEventListener("click", () => {
-   alert("Thank you for shopping at Stitch & Thread Co!");
-   window.location.href = "logIn.html"; //redirects to login page
-   }); 
+    document.getElementById("close").addEventListener("click", () => {
+      alert("Thank you for shopping at Stitch & Thread Co!");
+      window.location.href = "logIn.html"; //redirects to login page
+    });
   }
 });
 
@@ -695,3 +695,62 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 });
+
+// ---------------- User Frequency Dashboard ----------------
+document.addEventListener("DOMContentLoaded", () => {
+  if (window.location.pathname.includes("dashboard.html")) {
+    // Get users from the correct storage key
+    let users = JSON.parse(localStorage.getItem("RegistrationData")) || [];
+
+    const genderCount = { male: 0, female: 0, other: 0 };
+    const ageGroups = { "18-25": 0, "26-35": 0, "36-50": 0, "50+": 0 };
+
+    users.forEach(user => {
+      // Normalize gender to lowercase for comparison
+      // If user.gender is undefined, default to "other"
+      const gender = user.gender ? user.gender.toLowerCase() : "other";
+
+      if (gender === "male") {
+        genderCount.male++;
+      } else if (gender === "female") {
+        genderCount.female++;
+      } else {
+        genderCount.other++;
+      }
+
+      // Age group count
+      const age = parseInt(user.age);
+      if (age >= 18 && age <= 25) {
+        ageGroups["18-25"]++;
+      } else if (age >= 26 && age <= 35) {
+        ageGroups["26-35"]++;
+      } else if (age >= 36 && age <= 50) {
+        ageGroups["36-50"]++;
+      } else {
+        ageGroups["50+"]++;
+      }
+    });
+
+    // Display Gender
+    const genderResults = document.getElementById("genderResults");
+    if (genderResults) {
+      genderResults.innerHTML = `
+        Male: ${genderCount.male} <br>
+        Female: ${genderCount.female} <br>
+        Other: ${genderCount.other}
+      `;
+    }
+
+    // Display Age Groups
+    const ageResults = document.getElementById("ageResults");
+    if (ageResults) {
+      ageResults.innerHTML = `
+        18-25: ${ageGroups["18-25"]} <br>
+        26-35: ${ageGroups["26-35"]} <br>
+        36-50: ${ageGroups["36-50"]} <br>
+        50+: ${ageGroups["50+"]}
+      `;
+    }
+  }
+});
+
