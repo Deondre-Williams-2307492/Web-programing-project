@@ -140,6 +140,53 @@ if (loginForm) {
   });
 }
 
+//Reset Password on the Log In Page
+const resetForm = document.getElementById("resetForm");
+
+// Run this only on reset page
+if (resetForm) {
+
+    resetForm.addEventListener("submit", function(event) {
+        event.preventDefault(); // stops the page from refreshing
+
+        // Read what the user typed
+        const emailInput = document.getElementById("resetEmail").value.trim();
+        const trnInput = document.getElementById("resetTRN").value.trim();
+        
+         // Check if fields are empty
+        if (emailInput === "" || trnInput === "") {
+            alert("Please enter both email and TRN.");
+            return;
+        }
+
+        // Get registered users from localStorage
+        const users = JSON.parse(localStorage.getItem("RegistrationData")) || [];
+
+        // Check if a user exists with that TRN
+        const foundUser = users.find(u => u.username === trnInput);
+
+        if (!foundUser) {
+            alert("No account found with this TRN.");
+            return;
+        }
+
+        // Check if the email matches the TRN
+        if (foundUser.email !== emailInput) {
+            alert("The email does not match this TRN.");
+            return;
+        }
+
+        // Simulate sending reset link
+        alert("A password reset link has been sent to your email.");
+
+        // Redirect back to login page after 2 seconds
+        setTimeout(() => {
+            window.location.href = "logIn.html";
+        }, 2000);
+    });
+  }
+
+
 // ---------------- Navigation Buttons ----------------
 const goToSignupBTN = document.getElementById("goToSignupBTN");
 if (goToSignupBTN) {
@@ -165,44 +212,129 @@ if (logoutBtn) {
   });
 }
 
-// 1. Add items to cart (products.html)
-// 2. Display, remove, and clear items (cart.html)
-// 3. Data stored using localStorage (browser-based)
+//  Add items to cart (products.html)
+//  Display, remove, and clear items (cart.html)
+//  Data stored using localStorage (browser-based)
 
 // WHEN PAGE LOADS
 document.addEventListener("DOMContentLoaded", () => {
 
-  // PRODUCTS PAGE: Add to Cart Functionality
+  // PRODUCTS PAGE: Dynamic Rendering & Add to Cart
   if (window.location.pathname.includes("products.html")) {
-    const addToCartButtons = document.querySelectorAll(".product-card button"); //all button elements inside .product-card section 
 
-    addToCartButtons.forEach(button => {
-      button.addEventListener("click", () => {  //when a button is clicked get the product's information
-        const card = button.parentElement;
+    // a. Product List (Array of Objects)
+    const initialProducts = [
+      // --- Clothes ---
+      { name: "Baby Blue Two Piece Shorts Set", price: 3800, image: "babyBlueSet.png", category: "Clothes", description: "A comfortable and stylish baby blue two-piece set, perfect for casual outings." },
+      { name: "White Halter Back Top", price: 2700, image: "whiteBlouse.png", category: "Clothes", description: "An elegant white halter back top that pairs well with any bottom." },
+      { name: "Pink and Black Ruffle Skirt", price: 2200, image: "ruffleSkirt.png", category: "Clothes", description: "Fun and flirty pink and black ruffle skirt for a bold look." },
+      { name: "Beige Mesh Top", price: 6000, image: "beigeMeshTop.png", category: "Clothes", description: "Chic beige mesh top, ideal for layering or making a statement." },
+      { name: "Reggae Jamming Shorts Two Piece", price: 4700, image: "reggaeTwoPiece.png", category: "Clothes", description: "Vibrant reggae-themed two-piece shorts set to show your spirit." },
+      { name: "Orange Kiwi Shorts Set", price: 4200, image: "orangeKiwiSet.png", category: "Clothes", description: "Bright and fruity orange kiwi shorts set for summer vibes." },
+      { name: "Brown and White Sweater Top", price: 4000, image: "brownSweater.png", category: "Clothes", description: "Cozy brown and white sweater top for cooler evenings." },
+      { name: "Strawberry Shortcake Swim Set", price: 6100, image: "strawberrySwimSuit.png", category: "Clothes", description: "Adorable strawberry-themed swim set for the beach or pool." },
+      { name: "Green Ethereal Maxi Skirt", price: 6500, image: "greenTeaSet.png", category: "Clothes", description: "Flowy green ethereal maxi skirt that adds grace to your movement." },
+      { name: "White Date Night Dress", price: 7000, image: "dateNightDress.png", category: "Clothes", description: "Stunning white dress designed for the perfect date night." },
 
-        const name = card.querySelector("h3").textContent;
-        const price = parseFloat(card.querySelector("p").textContent.replace("$", "").trim());
-        const quantity = parseInt(card.querySelector("input").value);
-        const img = card.querySelector("img").src;
+      // --- Bags and Accessories ---
+      { name: "Bottle Holder", price: 1000, image: "bottleHolder.png", category: "Bags", description: "Handy crochet bottle holder to keep your hydration close." },
+      { name: "Blue Head Tie/Scarf", price: 1800, image: "headscarf.png", category: "Bags", description: "Versatile blue head tie that can also be styled as a scarf." },
+      { name: "Cherry Bag Charm", price: 700, image: "cherryBagCharm.png", category: "Bags", description: "Cute cherry bag charm to add personality to your accessories." },
+      { name: "Bow Tote Bag", price: 5600, image: "bowTote.png", category: "Bags", description: "Stylish tote bag featuring a prominent bow design." },
+      { name: "Sunflower Scrunchie", price: 800, image: "sunflowerScrunchie.png", category: "Bags", description: "Bright sunflower scrunchie to add a pop of color to your hair." },
+      { name: "Brown Duffle Bag", price: 5000, image: "brownDuffle.png", category: "Bags", description: "Spacious brown duffle bag for all your travel or gym needs." },
+      { name: "Multicoloured Headband", price: 1000, image: "Headband.png", category: "Bags", description: "Fun multicoloured headband to keep your hair back in style." },
+      { name: "Ruffle Beanie", price: 3500, image: "ruffleHat.png", category: "Bags", description: "Cozy ruffle beanie to keep you warm and fashionable." },
+      { name: "Book Mark", price: 1000, image: "flowerbookMarker.png", category: "Bags", description: "Delicate flower bookmark for the avid reader." },
+      { name: "AirPod Case", price: 1500, image: "airPodcase.png", category: "Bags", description: "Protective and stylish case for your AirPods." },
 
-        // Check if this product has a size dropdown (clothes only)
-        const sizeDropdown = card.querySelector(".size");
-        let size = null; // default for jewelry / non-sized items
+      // --- Jewelry ---
+      { name: "(8) Piece Earring Set", price: 5500, image: "earringEight.png", category: "Jewelry", description: "Comprehensive 8-piece earring set for endless mix-and-match options." },
+      { name: "Flower Hoop Earring", price: 1200, image: "flowerHoop.png", category: "Jewelry", description: "Large flower hoop earrings that make a bold statement." },
+      { name: "(3) Gold Necklace with Flower Pendant", price: 4500, image: "necklaceThree.png", category: "Jewelry", description: "Elegant 3-layer gold necklace featuring a flower pendant." },
+      { name: "(4) Gold Bracelets with Flower Charms", price: 4800, image: "braceletFour.png", category: "Jewelry", description: "Set of 4 gold bracelets adorned with charming flower details." },
+      { name: "Dangling Sunflower Earring", price: 1800, image: "sunFlowerEarring.png", category: "Jewelry", description: "Cheerful dangling sunflower earrings to brighten your day." },
+      { name: "Pink Earring ", price: 1800, image: "pinkFlowerEarring.png", category: "Jewelry", description: "Soft pink earrings that add a touch of femininity." },
+      { name: "Silver Necklace with Multicoloured Charms ", price: 2100, image: "silverNecklace.png", category: "Jewelry", description: "Silver necklace featuring playful multicoloured charms." },
+      { name: "Blue Dainty Bracelet", price: 1000, image: "blueFlowerBracelet.png", category: "Jewelry", description: "Dainty blue bracelet perfect for subtle accessorizing." },
+      { name: "Strawberry Earrings", price: 1300, image: "strawberryEarrings.png", category: "Jewelry", description: "Sweet strawberry earrings for a whimsical touch." },
+      { name: "Orange Earrings", price: 1400, image: "orangeEarrings.png", category: "Jewelry", description: "Vibrant orange earrings to stand out from the crowd." }
+    ];
 
-        if (sizeDropdown) {
-          size = sizeDropdown.value; // get selected size
+    // b. Update localStorage
+    if (!localStorage.getItem("AllProducts")) {
+      localStorage.setItem("AllProducts", JSON.stringify(initialProducts));
+    }
+
+    // Always load from storage to ensure we have the source of truth
+    const allProducts = JSON.parse(localStorage.getItem("AllProducts"));
+
+    // c. Display Dynamically
+    const clothesContainer = document.querySelector("#Clothes .product-grid");
+    const bagsContainer = document.querySelector("#Bags .product-grid");
+    const jewelryContainer = document.querySelector("#Jewelry .product-grid");
+
+    // Clear existing hardcoded content
+    if (clothesContainer) clothesContainer.innerHTML = "";
+    if (bagsContainer) bagsContainer.innerHTML = "";
+    if (jewelryContainer) jewelryContainer.innerHTML = "";
+
+    allProducts.forEach(product => {
+      const card = document.createElement("div");
+      card.classList.add("product-card");
+
+      // Render inner HTML based on product data
+      // For clothes, we need size selector. For others, we might not.
+      const isClothes = product.category === "Clothes";
+
+      card.innerHTML = `
+        <img src="${product.image}" alt="${product.name}">
+        <h3>${product.name}</h3>
+        <p>$${product.price}</p>
+        <p style="font-size:0.8rem; color:#666; font-weight:normal; margin-bottom:10px;">${product.description}</p>
+        ${isClothes ? `
+        <label for="size">Size:</label>
+        <select class="size">
+          <option value="S">Small</option>
+          <option value="M">Medium</option>
+          <option value="L">Large</option>
+          <option value="XL">Extra Large</option>
+        </select>` : ''}
+        <label for="qty">Quantity:</label>
+        <input type="number" name="quantity" min="1" max="10" value="1">
+        <br> <br> <button>Add to Cart</button>
+      `;
+
+      // Determine where to append
+      if (product.category === "Clothes" && clothesContainer) {
+        clothesContainer.appendChild(card);
+      } else if (product.category === "Bags" && bagsContainer) {
+        bagsContainer.appendChild(card);
+      } else if (product.category === "Jewelry" && jewelryContainer) {
+        jewelryContainer.appendChild(card);
+      }
+
+      // 1. Add Event Listener Immediately (Logic copied from previous implementation)
+      const button = card.querySelector("button");
+      button.addEventListener("click", () => {
+        const qtyInput = card.querySelector("input[name='quantity']");
+        const quantity = parseInt(qtyInput.value);
+        let size = null;
+
+        if (isClothes) {
+          const sizeSelect = card.querySelector(".size");
+          size = sizeSelect.value;
         }
 
-        // Build product object
-        const product = {
-          name: name,
-          price: parseFloat(price),
+        const productToAdd = {
+          name: product.name,
+          price: product.price,
           size: size,
           quantity: quantity,
-          img: img,
+          img: product.image
         };
 
-        saveToCart(product);  //saves the object, the function is defined below
+        saveToCart(productToAdd);
       });
     });
   }

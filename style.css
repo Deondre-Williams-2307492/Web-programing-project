@@ -1442,3 +1442,122 @@ textarea {
   color: black;
   transform: scale(1.02);
 }
+/*--Locked Page--*/
+/* Scope everything inside .locked-page to avoid conflicts */
+.locked-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+/* Card container */
+.locked-page .locked-container {
+  background: white;
+  width: 350px;
+  padding: 30px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 0 12px rgba(0,0,0,0.1);
+}
+
+/* Lock icon */
+.locked-page .locked-icon {
+  font-size: 60px;
+  color: #cc0000;
+  margin-bottom: 15px;
+}
+
+/* Title */
+.locked-page .locked-title {
+  color: #cc0000;
+  margin-bottom: 10px;
+}
+
+/* Text */
+.locked-page .locked-text {
+  color: #555;
+  margin-bottom: 20px;
+  line-height: 1.4;
+}
+
+/* Button */
+.locked-page .locked-btn {
+  background-color: #cc0000;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  width: 100%;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.locked-page .locked-btn:hover {
+  background-color: #a70000;
+}
+
+/*Reset Password Page*/
+.reset-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+/* Card container */
+.reset-page .reset-container {
+    background: white;
+    width: 350px;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 12px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+/* Title */
+.reset-page .reset-title {
+    font-size: 26px;
+    margin-bottom: 10px;
+    color: var(--main-color);
+}
+
+/* Description text */
+.reset-page .reset-description {
+    color: #555;
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+/* Label */
+.reset-page .reset-label {
+    display: block;
+    text-align: left;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+/* Input field */
+.reset-page .reset-input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+/* Submit button */
+.reset-page .reset-btn {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    background-color: var(--main-color);
+    color: white;
+    cursor: pointer;
+}
