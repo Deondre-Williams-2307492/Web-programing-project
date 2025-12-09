@@ -36,6 +36,7 @@
       <h2>My Account</h2>
       <a href="products.html"><span class="material-icons">person</span> Profile</a>
       <a href="orders.html"><span class="material-icons">receipt_long</span> Orders</a>
+      <a href="dashboard.html"><span class="material-icons">dashboard</span> Dashboard</a>
       <a id="logoutBtn" href="#"> <span class="material-icons">logout</span> Logout</a>
 
       <h2>Shop By Category</h2>
@@ -45,31 +46,32 @@
     </div>
 
     <!-- Main Content -->
-   <div class="content">
-  <main class="cart-page">
-    <h2>🛒 My Cart</h2>
+    <div class="content">
+      <main class="cart-page">
+        <h2>🛒 My Cart</h2>
 
-    <!-- Cart items dynamically added by JavaScript -->
-    <div id="cart-container" class="cart-container"></div>
+        <!-- Cart items dynamically added by JavaScript -->
+        <div id="cart-container" class="cart-container"></div>
 
-    <!-- Cart Summary Section -->
-    <div class="cart-summary">
-      <h3 id="subtotal" class="subtotal">Subtotal: $0.00</h3>
-      <h3 id="discount" class="discount">Discount: -$0.00</h3>
-      <h3 id="tax" class="tax">Tax (15%): $0.00</h3>
-      <h2 id="total" class="total">Final Total: $0.00</h2>
+        <!-- Cart Summary Section -->
+        <div class="cart-summary">
+          <h3 id="subtotal" class="subtotal">Subtotal: $0.00</h3>
+          <h3 id="discount" class="discount">Discount: -$0.00</h3>
+          <h3 id="tax" class="tax">Tax (15%): $0.00</h3>
+          <h2 id="total" class="total">Final Total: $0.00</h2>
+        </div>
+
+        <!-- Cart Buttons -->
+        <div class="cart-buttons">
+          <button id="clear-cart" class="clear-btn">🗑️ Clear Cart</button>
+          <button id="check-out" class="checkout-btn">💳 Checkout</button>
+        </div>
+      </main>
     </div>
-
-    <!-- Cart Buttons -->
-    <div class="cart-buttons">
-      <button id="clear-cart" class="clear-btn">🗑️ Clear Cart</button>
-      <button id="check-out" class="checkout-btn">💳 Checkout</button>
-    </div>
-  </main>
-</div>
 
   </div>
 
   <script src="script.js"></script> <!-- reference to JavaScript -->
 </body>
+
 </html>

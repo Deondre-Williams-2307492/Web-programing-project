@@ -706,7 +706,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const ageGroups = { "18-25": 0, "26-35": 0, "36-50": 0, "50+": 0 };
 
     users.forEach(user => {
-      // Normalize gender to lowercase for comparison
+      
       // If user.gender is undefined, default to "other"
       const gender = user.gender ? user.gender.toLowerCase() : "other";
 
