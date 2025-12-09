@@ -24,7 +24,7 @@ if (registerForm) {  //only runs on register page
       return;
     }
 
-    // NEW REQUIREMENT: Age validation (must be 18 or older)
+    //  Age validation (must be 18 or older)
     const birthDate = new Date(dob);
     const today = new Date();
     let age = today.getFullYear() - birthDate.getFullYear();
@@ -50,7 +50,7 @@ if (registerForm) {  //only runs on register page
       return;
     }
 
-    // NEW: Password confirmation check
+    //  Password confirmation check
     if (password !== confirmPassword) {
       alert("Passwords do not match!");
       return;
@@ -104,7 +104,7 @@ if (registerForm) {  //only runs on register page
 
   });
 
-  // NEW REQUIREMENT: Cancel button functionality
+  //  Cancel button functionality
   const cancelBtn = document.getElementById("cancelBtn");
   if (cancelBtn) {
     cancelBtn.addEventListener("click", function () {
@@ -526,7 +526,7 @@ document.addEventListener("DOMContentLoaded", () => {
       orders.push(order);
       localStorage.setItem("orders", JSON.stringify(orders));
 
-      // NEW: Save to AllInvoices as per requirement
+      // Save to AllInvoices
       const allInvoices = JSON.parse(localStorage.getItem("AllInvoices")) || [];
       allInvoices.push(order);
       localStorage.setItem("AllInvoices", JSON.stringify(allInvoices));
@@ -692,7 +692,7 @@ document.addEventListener("DOMContentLoaded", () => {
       // Save back to localStorage
       localStorage.setItem("orders", JSON.stringify(orders));
 
-      // NEW: Save to AllInvoices
+      // Save to AllInvoices
       const allInvoices = JSON.parse(localStorage.getItem("AllInvoices")) || [];
       allInvoices.push(order);
       localStorage.setItem("AllInvoices", JSON.stringify(allInvoices));
@@ -766,7 +766,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // ---------------- Invoice Search ----------------
 function ShowInvoices(searchTRN = null) {
-  // Requirement: Use AllInvoices from localStorage
+  //  Use AllInvoices from localStorage
   // If AllInvoices is empty (e.g. old data), fallback to 'orders'
   let invoices = JSON.parse(localStorage.getItem("AllInvoices")) || [];
 
