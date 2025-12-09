@@ -38,9 +38,9 @@ This project was built using standard web technologies without external framewor
 4. **Internet Connection:** Required for loading the Chart.js CDN and Google Fonts.
 
 ## 🔐 Login Credentials
-Since this application uses your browser's **Local Storage** to save data, there are no pre-existing accounts when you first run it.
+This application supports two types of accounts: **Standard User** (Created via Registration) and **Administrator** (Pre-configured). Since data is saved to **Local Storage**, no standard user accounts exist initially, but the Admin account is automatically initialized.
 
-**To Log In (User):**
+### 👤 Standard User Login
 1.  Go to the **Register** page (`index.html`).
 2.  Fill out the form with your details.
     *   **Note:** You must be 18+ years old.
@@ -50,10 +50,11 @@ Since this application uses your browser's **Local Storage** to save data, there
 4.  You will be redirected to the **Login** page.
 5.  Enter the **Username (TRN)** and **Password** you just created to access the site.
 
-**To Log In (Admin):**
-*   **TRN:** 111-222-333
-*   **Password:** 123456789
-*   *Access exclusive analytics and user demographic charts.*
+### 🛡️ Admin Login
+Use these credentials to access the Admin Dashboard features:
+*   **Username / TRN:** `111-222-333`
+*   **Password:** `123456789`
+*   *Features: Access to exclusive analytics, demographic charts, and full invoice search capabilities.*
 
 ## 📊 Features
 *   **User Authentication:** Registration and Login with validation.
@@ -72,6 +73,8 @@ Since this application uses your browser's **Local Storage** to save data, there
 graph TD
     A[index.html Register] --> B[logIn.html Login]
     B --> C[aboutUs.html Home]
+    B --> L[resetPassword.html]
+    B -.-> M[accountLocked.html (Logic)]
     
     subgraph Main Navigation
     C --> D[products.html]
