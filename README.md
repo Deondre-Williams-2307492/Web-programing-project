@@ -7,7 +7,7 @@ Welcome to the **Stitch & Thread Co.** web application! This project is a functi
 *   **Module:** Web Programming (CIT2011)
 *   **Lecturer:** Ms. Christine Anuli
 *   **Occurrence:** UM2 (Thursday 1pm - 3pm)
-*   **Assignment:** Individual Assignment #2
+*   **Assignment:** Group Project
 
 ## 🛠️ Frameworks and Tools Used
 This project was built using standard web technologies without external frameworks (like React or Bootstrap) to demonstrate core web programming concepts.
