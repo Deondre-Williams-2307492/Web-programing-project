@@ -64,8 +64,9 @@ Use these credentials to access the Admin Dashboard features:
 *   **Order History:** Users can view their past orders.
 *   **Dynamic Dashboard:**
     *   **Admins:** View interactive **Charts** (Gender & Age) and data summaries.
-    *   **Users:** View personal **My Invoices** list directly on the dashboard.
+    *   **Users:** View personal **My Invoices** list directly on the dashboard. Personalized greeting (e.g., "John's Dashboard").
 *   **Advanced Invoice Search:** functionality located on the dashboard to search invoices by **TRN** or **Order ID**.
+*   **Printable Invoices:** Generate and print professional invoices directly from the **Orders** page or **Dashboard**.
 *   **Responsive Design:** Fully optimized for Mobile, Tablet, and Desktop views.
 
 ## 🗺️ Site Map

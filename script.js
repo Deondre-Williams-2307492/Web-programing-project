@@ -821,7 +821,10 @@ document.addEventListener("DOMContentLoaded", () => {
             <p>Tax (15%): $${(order.tax || 0).toFixed(2)}</p>
             <p class="invoice-total"><strong>Total Cost: $${(order.total || 0).toFixed(2)}</strong></p>
         </div>
-        <button class="cancelOrderBtn" data-id="${order.id}">❌ Cancel Order</button>
+        <div style="display: flex; gap: 10px; margin-top: 10px;">
+            <button class="cancelOrderBtn" data-id="${order.id}">❌ Cancel Order</button>
+            <button onclick="printInvoiceById(${order.id})" style="padding: 10px; background-color: var(--main-color); color: white; border: none; border-radius: 5px; cursor: pointer;">Print Invoice 🖨️</button>
+        </div>
       `;
 
 
@@ -1113,6 +1116,9 @@ document.addEventListener("DOMContentLoaded", () => {
                         <ul style="padding-left: 20px; font-size: 0.9em; max-height: 100px; overflow-y: auto;">
                             ${itemsHTML}
                         </ul>
+                        <div style="margin-top: 15px; text-align: center;">
+                            <button onclick="printInvoiceById(${order.id})" style="padding: 8px 15px; background-color: var(--main-color); color: white; border: none; border-radius: 5px; cursor: pointer;">Print Invoice 🖨️</button>
+                        </div>
                     `;
             myInvoicesDiv.appendChild(div);
           });
@@ -1170,6 +1176,9 @@ function ShowInvoices(searchTRN = null) {
             <ul style="padding-left: 20px; font-size: 0.9em; max-height: 100px; overflow-y: auto;">
                 ${itemsHTML}
             </ul>
+            <div style="margin-top: 15px; text-align: center;">
+                <button onclick="printInvoiceById(${order.id})" style="padding: 8px 15px; background-color: var(--main-color); color: white; border: none; border-radius: 5px; cursor: pointer;">Print Invoice 🖨️</button>
+            </div>
           `;
         resultsDiv.appendChild(div);
       });
@@ -1230,3 +1239,123 @@ function GetUserInvoices() {
   console.log("\n--- End of Report ---");
 }
 
+// ---------------- Print Invoice Logic ----------------
+window.printInvoiceById = function (orderId) {
+  let allInvoices = JSON.parse(localStorage.getItem("AllInvoices")) || [];
+  if (allInvoices.length === 0) {
+    allInvoices = JSON.parse(localStorage.getItem("orders")) || [];
+  }
+  const order = allInvoices.find(o => o.id == orderId); // equality match
+  if (order) {
+    printInvoice(order);
+  } else {
+    alert("Invoice not found!");
+  }
+}
+
+function printInvoice(order) {
+  const itemsHTML = (order.items || []).map(item => `
+        <tr>
+            <td>${item.name}</td>
+            <td>${item.quantity}</td>
+            <td>$${item.price.toFixed(2)}</td>
+            <td>$${(item.price * item.quantity).toFixed(2)}</td>
+        </tr>
+    `).join("");
+
+  const content = `
+        <html>
+        <head>
+            <title>Invoice #${order.id} - Stitch & Thread Co.</title>
+            <style>
+                body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; padding: 40px; color: #333; }
+                .invoice-header { text-align: center; margin-bottom: 40px; border-bottom: 2px solid #eee; padding-bottom: 20px; }
+                .invoice-header h1 { margin: 0; color: #444; }
+                .invoice-meta { display: flex; justify-content: space-between; margin-bottom: 30px; }
+                .invoice-section { margin-bottom: 20px; }
+                table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+                th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+                th { background-color: #f8f9fa; font-weight: bold; }
+                .total-section { margin-top: 30px; text-align: right; }
+                .total-section p { margin: 5px 0; }
+                .grand-total { font-size: 1.5em; font-weight: bold; color: #000; margin-top: 10px; border-top: 2px solid #eee; pt-2; }
+                @media print {
+                    button { display: none; }
+                }
+            </style>
+        </head>
+        <body>
+            <div class="invoice-header">
+                <h1>Stitch & Thread Co.</h1>
+                <p>Date: ${order.date}</p>
+                <h2>INVOICE #${order.id}</h2>
+            </div>
+            
+            <div class="invoice-meta">
+                <div class="invoice-section">
+                    <h3>Bill To:</h3>
+                    <p><strong>Name:</strong> ${order.customerName || "N/A"}</p>
+                    <p><strong>TRN:</strong> ${order.user || "N/A"}</p>
+                    <p><strong>Address:</strong> ${order.address || "N/A"}</p>
+                    <p><strong>Phone:</strong> ${order.phone || "N/A"}</p>
+                    <p><strong>Email:</strong> ${order.email || "N/A"}</p>
+                </div>
+                <div class="invoice-section" style="text-align: right;">
+                    <h3>Payment Details:</h3>
+                    <p><strong>Method:</strong> ${order.paymentMethod || "N/A"}</p>
+                    <p><strong>Order ID:</strong> ${order.id}</p>
+                </div>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Item</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Subtotal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${itemsHTML}
+                </tbody>
+            </table>
+
+            <div class="total-section">
+                <p>Subtotal: $${(order.subtotal || 0).toFixed(2)}</p>
+                <p>Discount: -$${(order.discount || 0).toFixed(2)}</p>
+                <p>Tax (15%): $${(order.tax || 0).toFixed(2)}</p>
+                <div class="grand-total">Total: $${(order.total || 0).toFixed(2)}</div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 50px; font-size: 0.9em; color: #777;">
+                <p>Thank you for shopping with Stitch & Thread Co.!</p>
+                <p>Contact us: support@stitchandthread.com | (555) 123-4567</p>
+            </div>
+
+            <script>
+                // Auto print when loaded
+                window.onload = function() { 
+                    setTimeout(() => {
+                        window.print();
+                    }, 500); 
+                }
+            </script>
+        </body>
+        </html>
+    `;
+
+  // Create a Blob from the HTML content
+  const blob = new Blob([content], { type: 'text/html' });
+  const url = URL.createObjectURL(blob);
+
+  // Open the Blob URL in a new window
+  const printWindow = window.open(url, '', 'width=800,height=800');
+
+ 
+  if (printWindow) {
+    printWindow.onload = function () {
+      URL.revokeObjectURL(url);
+    };
+  }
+}
